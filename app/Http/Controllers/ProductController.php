@@ -53,6 +53,7 @@ class ProductController extends Controller
         $request->file('productImage')->storeAs('public',$fileName);
         }
         Product::create($data);
+
         return redirect()->route('product#homePage')->with(['createSuccess'=>'Created Successfully']);
 
     }
@@ -100,6 +101,7 @@ class ProductController extends Controller
            return [
            'product_name'=>$request->productName,
            'product_brand'=>$request->productBrand,
+           'product_image'=>$request->productImage,
            'product_price'=>$request->productPrice,
            'product_description'=>$request->productDescription,
            'category_id'=>$request->categoryId,

@@ -7,6 +7,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Api\CartController;
 use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\ProductController;
+use App\Http\Controllers\Api\ProfileController;
 use App\Http\Controllers\Api\CategoryController;
 
 /*
@@ -25,6 +26,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 Route::post('login',[AuthController::class,'login']);
 Route::post('register',[AuthController::class,'register']);
+Route::post('editProfile',[ProfileController::class,'editProfile']);
 
 // Route::get('products',[ProductController::class,'getProducts'])->middleware('auth:sanctum'); for middleware auth
 Route::get('products',[ProductController::class,'getProducts']);
