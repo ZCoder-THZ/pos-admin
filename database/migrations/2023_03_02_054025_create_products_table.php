@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('product_name')->required();
             $table->string('product_brand')->required();
             $table->string('product_price')->required();
-            $table->string('product_description');
+            $table->string('product_description',1000);
             $table->string('category_id')->required();
             $table->string('product_image');
 

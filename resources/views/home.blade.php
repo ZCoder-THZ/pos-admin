@@ -84,10 +84,15 @@
                         <th scope="row">{{ $product->product_name }}</th>
                         <th scope="row">{{ $product->product_price }}</th>
                         <th scope="row">{{ $product->created_at }}</th>
-                        <th> <a href="{{ route('product#editProductPage', $product->product_id) }}"
+                        <th class="">
+
+
+                            <a href="{{ route('product#editProductPage', $product->product_id) }}"
                                 class="btn btn-warning"><i class="fa-solid fa-file-pen"></i>Detail</a>
-                            <a href="{{ route('product#deleteProduct', $product->product_id) }}" class="btn btn-danger"><i
-                                    class="fa-solid fa-trash"></i>Delete</a>
+
+                            <a class="btn btn-danger"href="{{ route('product#deleteProduct', $product->product_id) }}"
+                                class=""><i class="fa-solid fa-trash"></i>Delete</a>
+
                         </th>
                     </tr>
                 @endforeach

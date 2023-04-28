@@ -88,7 +88,7 @@ class ProductController extends Controller
     // production validation check
     public function productValidationCheck($request){
          Validator::make($request->all(),[
-            'productName'=>'required|min:5|max:40',
+            'productName'=>'required|min:5',
             'productPrice'=>'required',
             'productDescription'=>'required',
             'productImage'=>'required',
@@ -101,7 +101,6 @@ class ProductController extends Controller
            return [
            'product_name'=>$request->productName,
            'product_brand'=>$request->productBrand,
-           'product_image'=>$request->productImage,
            'product_price'=>$request->productPrice,
            'product_description'=>$request->productDescription,
            'category_id'=>$request->categoryId,

@@ -22,7 +22,18 @@ class CategoryController extends Controller
     }
     //
     public function categoryList(){
-        $categories=Category::get();
-        return view('categoryList');
+        $categories=Category::paginate(9);
+        return view('categoryList',compact('categories'));
+    }
+    // delte
+    public function deleteCategory($id){
+        $category=Category::where('category_id',$id)->exists();
+
+        if($category){
+        Category::where('category_id',$id)->delete();
+
+            return redirect()->route('category#categoryList')->with(['deleteSuccess'=>'deleted successfully']);
+        }
+
     }
 }

@@ -43,6 +43,8 @@ Route::middleware([
 
 
         Route::get('orderList',[OrderController::class,'getOrderList'])->name('order#getOrders');
+        Route::get('categoryList',[CategoryController::class,'categoryList'])->name('category#categoryList');
+        Route::get('category/delete/{id}',[CategoryController::class,'deleteCategory'])->name('category#deleteCategory');
         Route::get('orderItems/{order_code}',[OrderController::class,'getOrderItems'])->name('order#getOrderItems');
            Route::get('ajax/change/status',[OrderController::class,'ajaxChangeStatus'])->name('order#ajaxChangeStatus');
     Route::prefix('product')->group(function () {
@@ -55,11 +57,11 @@ Route::middleware([
     Route::post('/category/create',[CategoryController::class,'createCategory'])->name('category#createCategory');
 
 
-        Route::middleware(['user_auth'])->group(function () {
-                Route::prefix('user')->group(function () {
-                    Route::get('home',[UserController::class,'home'])->name('user#home');
-                });
-        });
+        // Route::middleware(['user_auth'])->group(function () {
+        //         Route::prefix('user')->group(function () {
+        //             Route::get('home',[UserController::class,'home'])->name('user#home');
+        //         });
+        // });
 
     });
 
@@ -68,4 +70,4 @@ Route::middleware([
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

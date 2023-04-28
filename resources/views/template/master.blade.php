@@ -99,6 +99,7 @@
 
                         <a class="collapse-item" href="{{ route('product#productCreatePage') }}">Create Product</a>
                         <a class="collapse-item" href="{{ route('category#createCategoryPage') }}">Create Category</a>
+                        <a class="collapse-item" href="{{ route('category#categoryList') }}">Category List</a>
 
 
 
