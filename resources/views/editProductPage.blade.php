@@ -58,7 +58,7 @@
             <select name="categoryId" id="" class="form-control">
                 <option value="">Select The Catgegory</option>
                 @foreach ($categories as $category)
-                    <option value="{{ $category->category_id }}" @if ($product->category_id == $category->category_id) selected @endif>
+                    <option value="{{ $category->id }}" @if ($product->category_id == $category->id) selected @endif>
                         {{ $category->category_name }}</option>
                     {{-- <option value="2">Funiture</option> --}}
                 @endforeach

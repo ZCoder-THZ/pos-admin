@@ -37,16 +37,14 @@
             <tbody>
                 @foreach ($categories as $category)
                     <tr>
-                        <th scope="row">{{ $category->category_id }}</th>
-                        <th scope="row">{{ $category->category_name }}</th>
+                        <td>{{ $category->id }}</td>
+                        <td>{{ $category->category_name }}</td>
+                        <td>{{ $category->created_at->format('d-M-y') }}</td>
 
-                        <th>
-                            {{ $category->created_at }}
-                        </th>
-                        <th>
-                            <a href="{{ route('category#deleteCategory', $category->category_id) }}"
-                                class="btn btn-danger"><i class="fa-solid fa-trash"></i>Delete</a>
-                        </th>
+                        <td>
+                            <a href="{{ route('category#deleteCategory', $category->id) }}" class="btn btn-danger"><i
+                                    class="fa-solid fa-trash"></i>Delete</a>
+                        </td>
                     </tr>
                 @endforeach
             </tbody>

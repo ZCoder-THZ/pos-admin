@@ -10,76 +10,80 @@ use Illuminate\Support\Facades\Auth;
 class AdminController extends Controller
 {
     //
-    public function getAdminList(){
-        $users=User::get();
-
-        return view('admin.adminList',compact('users'));
+    public function getAdminList()
+    {
+        $users = User::get();
+        return view('admin.adminList', compact('users'));
     }
     //
-    public function getProfile(){
-        $user=Auth::user();
+    public function getProfile()
+    {
+        $user = Auth::user();
 
-        return view('admin.adminProfile',compact('user'));
+        return view('admin.adminProfile', compact('user'));
     }
-    public function profileDetail($id){
-        $user=User::where('id',$id)->first();
+    public function profileDetail($id)
+    {
+        $user = User::where('id', $id)->first();
 
-        return view('admin.profileDetail',compact('user'));
-
-    }
-    //
-
-    public function editProfilePage($id){
-        $user=User::where('id',$id)->first();
-
-        return view('admin.editProfile',compact('user'));
+        return view('admin.profileDetail', compact('user'));
     }
     //
-    public function deleteAdmin($id){
-        $user=User::where('id',$id)->delete();
-        $users=User::get();
 
+    public function editProfilePage($id)
+    {
+        $user = User::where('id', $id)->first();
 
-        return redirect()->route('admin#list',compact('users'))->with(['deleteSuccess'=>'deleted Success']);
-
-
+        return view('admin.editProfile', compact('user'));
     }
     //
-    public function editProfile(Request $request){
-       $data= $this->getUserData($request);
-       $user=User::where('id',$request->userId)->first();
-        if($request->userImage){
+    public function deleteAdmin($id)
+    {
+        $user = User::where('id', $id)->delete();
+        $users = User::get();
 
-           if($user->image){
-            Storage::delete('public/users/'.$user->image);
-                }
-            $imageName=uniqid().'_'.$request->file('userImage')->getClientOriginalName();
-            $request->file('userImage')->storeAs('public/users',$imageName);
-            $data['image']=$imageName;
+        return redirect()
+            ->route('admin#list', compact('users'))
+            ->with(['deleteSuccess' => 'deleted Success']);
+    }
+    //
+    public function editProfile(Request $request)
+    {
+        $data = $this->getUserData($request);
+        $user = User::where('id', $request->userId)->first();
+        if ($request->userImage) {
+            if ($user->image) {
+                Storage::delete('public/users/' . $user->image);
+            }
+            $imageName = uniqid() . '_' . $request->file('userImage')->getClientOriginalName();
+            $request->file('userImage')->storeAs('public/users', $imageName);
+            $data['image'] = $imageName;
         }
-        User::where('id',$request->userId)->update($data);
-        return redirect()->route('admin#editProfilePage',$user);
+        User::where('id', $request->userId)->update($data);
+        return redirect()->route('admin#editProfilePage', $user);
     }
-    public function changeRole(Request $request){
-        $user=User::where('id',$request->userId)->exists();
-        if($user){
-            User::where('id',$request->userId)->update([
-                    "role"=>$request->role
+    public function changeRole(Request $request)
+    {
+        $user = User::where('id', $request->userId)->exists();
+        if ($user) {
+            User::where('id', $request->userId)->update([
+                'role' => $request->role,
             ]);
             return response()->json([
-                "status"=>"success",
-                "user"=>$user
+                'status' => 'success',
+                'user' => $user,
             ]);
         }
     }
     //
-    public function getUserData($request){
+    public function getUserData($request)
+    {
         return [
-            'name'=>$request->userName,
-            'email'=>$request->userEmail,
-            'phone'=>$request->userPhone,
-            'gender'=>$request->userGender,
-            'address'=>$request->userAddress
+            'name' => $request->userName,
+            'email' => $request->userEmail,
+            'phone' => $request->userPhone,
+            'gender' => $request->userGender,
+            'address' => $request->userAddress,
         ];
     }
 }
