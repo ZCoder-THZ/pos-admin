@@ -11,9 +11,11 @@
         "laravel/framework": "^10.0",
         "laravel/jetstream": "^3.0",
         "laravel/sanctum": "^3.2",
+        "laravel/telescope": "^5.0",
         "laravel/tinker": "^2.8",
         "laravel/ui": "^4.2",
-        "livewire/livewire": "^2.11"
+        "livewire/livewire": "^2.11",
+        "yajra/laravel-datatables": "^10.1"
     },
     "require-dev": {
         "laravel/pint": "^1.0",

@@ -1,5 +1,41 @@
 @extends ('template.master')
+@section('styleSource')
+    <style>
+        .preview-images-zone {
+            width: 100%;
+            border: 1px solid #ddd;
+            min-height: 180px;
+            border-radius: 5px;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            box-sizing: border-box;
+        }
 
+        .preview-images-zone .preview-image {
+            width: 200px;
+            height: 180px;
+            position: relative;
+            margin: 10px;
+        }
+
+        .preview-images-zone .preview-image .delete-button {
+            position: absolute;
+            top: 0;
+            right: 0;
+            cursor: pointer;
+            width: 25px;
+            height: 25px;
+            background-color: #333;
+            color: #fff;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 25px;
+        }
+    </style>
+@endsection
 @section('content')
     <form class="col-4 offset-4 shadow p-4 rounded" method="post" action="{{ route('product#createProduct') }}"
         enctype="multipart/form-data">
@@ -25,7 +61,7 @@
                 <small class="text-danger">{{ $message }}</small>
             @enderror
         </div>
-
+        {{--
         <div class="mb-3">
             <label for="exampleInputPassword1" class="form-label">Product Picture</label>
             <input type="file" name="productImage" class="form-control" id="productImage" onchange="previewImage(this)">
@@ -33,7 +69,14 @@
             @error('productImage')
                 <small class="text-danger">{{ $message }}</small>
             @enderror
+        </div> --}}
+
+        <div class="form-group">
+            <label for="images">Product Images (Max: 2048 KB)</label>
+            <input type="file" name="images[]" id="images" class="form-control-file" multiple required>
         </div>
+
+
         <div class="mb-3">
             <label for="">Product Description</label>
             <textarea name="productDescription" class="form-control" id="productDescription">Enter Description</textarea>
@@ -54,21 +97,34 @@
                 <small class="text-danger">{{ $message }}</small>
             @enderror
         </div>
+
+        <div class="preview-images-zone">
+        </div>
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
-
     <script>
-        function previewImage(input) {
-            if (input.files && input.files[0]) {
-                var reader = new FileReader();
-
-                reader.onload = function(e) {
-                    $('#preview').attr('src', e.target.result);
-                    $('#preview').css('display', 'block');
-                }
-
-                reader.readAsDataURL(input.files[0]);
+        document.getElementById('images').addEventListener('change', function() {
+            var files = document.getElementById('images').files;
+            for (var i = 0; i < files.length; i++) {
+                previewImage(this.files[i]);
             }
+        });
+
+        function previewImage(file) {
+            var reader = new FileReader();
+            reader.onload = function(event) {
+                var html = `
+            <div class="preview-image">
+                <img src="${event.target.result}" alt="${file.name}" style="width:100%;height:100%;">
+                <span class="delete-button" onclick="removeImage(this)">X</span>
+            </div>`;
+                document.querySelector('.preview-images-zone').insertAdjacentHTML('beforeend', html);
+            }
+            reader.readAsDataURL(file);
+        }
+
+        function removeImage(element) {
+            element.parentElement.remove();
         }
     </script>
 @endsection

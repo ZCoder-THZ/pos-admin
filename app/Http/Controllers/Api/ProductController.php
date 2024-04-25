@@ -9,35 +9,51 @@ use App\Http\Controllers\Controller;
 class ProductController extends Controller
 {
     //
-    public function getProducts (Request $request){
+    public function getProducts(Request $request)
+    {
+        $products = Product::where('product_name', 'like', '%' . $request->search . '%')
+            ->with([
+                'images' => function ($query) {
+                    $query->select('id', 'product_id', 'url'); // Select the specific fields from ProductImages
+                },
+            ])
+            ->with(['category:category_name,id'])
+            ->get()
+            ->map(function ($product) {
+                if ($product->images->isNotEmpty()) {
+                    $product->product_image = $product->images->first()->url;
+                } else {
+                    $product->product_image = null;
+                }
+                unset($product->images); // Unset the images relation
+                return $product;
+            });
 
-    //    $products= Product::when(request('search'),function($query){
-    //     $query->where('product_name', 'like', '%' . request('search') . '%');
-    //     })->get();
-        $products=Product::where('product_name','like','%'.$request->search.'%')->get();
         logger(request('search'));
         return response()->json([
-            'status'=>$products
+            'status' => $products,
         ]);
     }
-    public function getProduct($id){
-        $product=Product::where('product_id',$id)->first();
+    public function getProduct($id)
+    {
+        $product = Product::where('id', $id)->first();
         return response()->json([
-                'product'=>$product
+            'product' => $product,
         ]);
     }
-    public function searchProduct(Request $request){
+    public function searchProduct(Request $request)
+    {
         logger($request->all());
         return response()->json([
-                'searchItem'=>$request->all()
+            'searchItem' => $request->all(),
         ]);
     }
-    public function getRandomProducts(){
-        $random=Product::inRandomOrder()->take(4)->get();
+    public function getRandomProducts()
+    {
+        $random = Product::inRandomOrder()->take(4)->get();
 
         return response()->json([
-                "random"=>$random
+            'random' => $random,
         ]);
-
     }
 }

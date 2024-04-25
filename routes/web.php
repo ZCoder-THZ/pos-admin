@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\CountryController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\User\UserController;
 
@@ -18,13 +19,8 @@ use App\Http\Controllers\User\UserController;
 |
 */
 
-Route::middleware([
-    'auth:sanctum',
-    config('jetstream.auth_session'),
-    'verified',
-    // 'user_auth'
-])->group(function () {
-    Route::middleware(['user_auth'])->group(function () {
+Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])->group(function () {
+    Route::middleware([])->group(function () {
         Route::group(['prefix' => 'admin'], function () {
             Route::get('list', [AdminController::class, 'getAdminList'])->name('admin#list');
             Route::get('list/changeRole', [AdminController::class, 'ChangeRole'])->name('admin#ChangeRole'); //ajax route
@@ -59,6 +55,14 @@ Route::middleware([
         //         });
         // });
     });
+    Route::get('countries', [CountryController::class, 'index'])->name('product#countryList');
+    Route::get('country-list', [CountryController::class, 'getCountryList'])->name('product#getCountryList');
+    Route::get('add-country', [CountryController::class, 'addCountry'])->name('product#addCountry');
+    Route::post('add-country', [CountryController::class, 'storeCountry'])->name('product#storeCountry');
+    Route::post('add-country', [CountryController::class, 'storeCountry'])->name('product#storeCountry');
+    Route::put('update-country', [CountryController::class, 'updateCountry'])->name('product#updateCountry');
+
+    // Route::get('country-list', [ProductController::class, 'countryList'])->name('product#countryList');
 });
 
 Auth::routes();

@@ -47,6 +47,8 @@
                 box-shadow: 10px 10px 10px rgba(46, 54, 68, 0.03);
             }
         </style>
+        @yield('styleSource')
+
     </head>
 
     <body id="page-top">
@@ -66,7 +68,7 @@
                     <div class="sidebar-brand-text mx-3">SB Admin <sup>2</sup></div>
                 </a>
 
-                <!-- Divider -->
+                <!-- Divider -->Bootstrap
                 <hr class="sidebar-divider my-0">
 
                 <!-- Nav Item - Dashboard -->
@@ -267,8 +269,11 @@
 
 
         <!-- Bootstrap core JavaScript-->
-        <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
+        <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
         <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+        <script src="https://cdn.datatables.net/2.0.5/js/dataTables.js"></script>
+        <script src="https://cdn.datatables.net/2.0.5/js/dataTables.bootstrap4.js"></script>
 
         <!-- Core plugin JavaScript-->
         <script src="{{ asset('vendor/jquery-easing/jquery.easing.min.js') }}"></script>
@@ -282,9 +287,6 @@
         <!-- Page level custom scripts -->
         {{-- <script src="{{ asset('js/demo/chart-area-demo.js') }}"></script>
     <script src="{{ asset('js/demo/chart-pie-demo.js"') }}"></script> --}}
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"
-            integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ=="
-            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
         @yield('scriptSource')
     </body>

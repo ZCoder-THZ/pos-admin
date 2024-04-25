@@ -7,8 +7,9 @@
         <x-validation-errors class="mb-4" />
 
         <form method="POST" action="{{ route('register') }}">
+            <h1 class="text-center">POS Admin</h1>
             @csrf
-
+            <h3 class="mb-4">Register Admin</h3>
             <div>
                 <x-label for="name" value="{{ __('Name') }}" />
                 <x-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required
@@ -22,11 +23,7 @@
             </div>
 
 
-            <div class="mt-4">
-                <x-label for="password" value="{{ __('Password') }}" />
-                <x-input id="password" class="block mt-1 w-full" type="password" name="password" required
-                    autocomplete="new-password" />
-            </div>
+
             <div class="mt-4">
                 <x-label for="password" value="{{ __('Phone') }}" />
                 <x-input class="block mt-1 w-full" type="text" name="phone" required />
@@ -34,16 +31,20 @@
             <div class="mt-4">
                 <x-label for="gender" value="{{ __('Select Gender') }}" />
 
-                <select name="gender" class="block mt-1 w-full" id="" required>
-                    <option value="male">Male</option>
-                    <option value="male">Female</option>
+                <select name="gender" class="block mt-1 w-full bg-gray-800" id="" required>
+                    <option class="bg-gray-800" value="male">Male</option>
+                    <option class="bg-gray-800" value="male">Female</option>
                 </select>
             </div>
             <div class="mt-4">
                 <x-label for="address" value="{{ __('Address') }}" />
                 <x-input class="block mt-1 w-full" type="text" name="address" required />
             </div>
-
+            <div class="mt-4">
+                <x-label for="password" value="{{ __('Password') }}" />
+                <x-input id="password" class="block mt-1 w-full" type="password" name="password" required
+                    autocomplete="new-password" />
+            </div>
             <div class="mt-4">
                 <x-label for="password_confirmation" value="{{ __('Confirm Password') }}" />
                 <x-input id="password_confirmation" class="block mt-1 w-full" type="password"

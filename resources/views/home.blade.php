@@ -1,7 +1,6 @@
 @extends('template.master')
 @section('content')
     <div class="container-fluid">
-
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <h1 class="h3 mb-0 text-gray-800">Created Products</h1>
@@ -22,9 +21,6 @@
 
                 </form>
             </div>
-
-
-
         </div>
         @if (session('updateSuccess'))
             <div class="offset-8 col-4">
@@ -72,12 +68,11 @@
                 @if ($products->count() > 0)
                     @foreach ($products as $product)
                         <tr>
-                            <th scope="row">{{ $product->product_id }}</th>
-                            <th scope="row"><img
-                                    src="{{ preg_match('/^https:\/\/images.unsplash.com\//', $product->product_image) ? $product->product_image : asset('storage/' . $product->product_image) }}"
-                                    class="card-img-top img-thumbnail" style="width: 100px" alt="..."></th>
-
-
+                            <th scope="row">{{ $product->id }}</th>
+                            <th scope="row">
+                                <img src="{{ preg_match('/^https:\/\/images.unsplash.com\//', $product->images[0]->url) ? $product->images[0]->url : asset('storage/' . $product->images[0]->url) }}"
+                                    class="card-img-top img-thumbnail" style="width: 100px" alt="...">
+                            </th>
                             <th scope="row">{{ $product->category->category_name }}</th>
                             <th scope="row">{{ $product->product_name }}</th>
                             <th scope="row">{{ $product->product_price }}</th>
@@ -85,10 +80,10 @@
                             <th class="">
 
 
-                                <a href="{{ route('product#editProductPage', $product->product_id) }}"
-                                    class="btn btn-warning"><i class="fa-solid fa-file-pen"></i>Detail</a>
+                                <a href="{{ route('product#editProductPage', $product->id) }}" class="btn btn-warning"><i
+                                        class="fa-solid fa-file-pen"></i>Detail</a>
 
-                                <a class="btn btn-danger"href="{{ route('product#deleteProduct', $product->product_id) }}"
+                                <a class="btn btn-danger"href="{{ route('product#deleteProduct', $product->id) }}"
                                     class=""><i class="fa-solid fa-trash"></i>Delete</a>
 
                             </th>

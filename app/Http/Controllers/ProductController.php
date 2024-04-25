@@ -4,10 +4,11 @@ namespace App\Http\Controllers;
 
 use Storage;
 use App\Models\Product;
+use App\Models\ProductImage;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-
+use App\Http\Requests\CreateProductRequest;
 class ProductController extends Controller
 {
     //home Page
@@ -34,26 +35,35 @@ class ProductController extends Controller
     public function editProductPage($id)
     {
         $categories = Category::get();
-        $product = Product::where('product_id', $id)->first();
-
+        $product = Product::where('id', $id)->first();
         return view('editProductPage', compact('categories', 'product'));
     }
     // create product
-    public function createProduct(Request $request)
+    public function createProduct(CreateProductRequest $request)
     {
-        $this->productValidationCheck($request);
+        // $this->productValidationCheck($request);
+        $validated = $request->validated();
 
         $data = $this->getProductData($request);
+        // if ($request->productImage == !null) {
+        //     $fileName = uniqid() . '_' . $request->file('productImage')->getClientOriginalName();
 
-        if ($request->productImage == !null) {
-            $fileName = uniqid() . '_' . $request->file('productImage')->getClientOriginalName();
+        //     $data['product_image'] = $fileName;
 
-            $data['product_image'] = $fileName;
-
-            $request->file('productImage')->storeAs('public', $fileName);
+        //     $request->file('productImage')->storeAs('public', $fileName);
+        // }
+        $product = Product::create($data);
+        $imageUrls = [];
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $image) {
+                $filename = $image->store('posts', 'public');
+                $productImage = new ProductImage();
+                $productImage->product_id = $product->id;
+                $productImage->url = $filename;
+                $productImage->save();
+                $imageUrls[] = $filename;
+            }
         }
-        Product::create($data);
-
         return redirect()
             ->route('product#homePage')
             ->with(['createSuccess' => 'Created Successfully']);
@@ -61,7 +71,7 @@ class ProductController extends Controller
     //  update
     public function edit(Request $request)
     {
-        $product = Product::where('product_id', $request->productId)->first();
+        $product = Product::where('id', $request->productId)->first();
         $data = $this->getProductData($request);
 
         if ($request->file('productImage')) {
@@ -75,7 +85,7 @@ class ProductController extends Controller
             $request->file('productImage')->storeAs('public', $fileName);
         }
         // Product::where();
-        Product::where('product_id', $request->productId)->update($data);
+        Product::where('id', $request->productId)->update($data);
         // dd('image doesn\'exist');
         return redirect()
             ->route('product#homePage')
@@ -84,7 +94,7 @@ class ProductController extends Controller
     // delete
     public function deleteProduct($id)
     {
-        Product::where('product_id', $id)->delete();
+        Product::where('id', $id)->delete();
         return redirect()
             ->route('product#homePage')
             ->with(['deleteSuccess' => 'deleted successfully']);
