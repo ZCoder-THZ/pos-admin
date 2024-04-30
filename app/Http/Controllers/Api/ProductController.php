@@ -36,7 +36,11 @@ class ProductController extends Controller
     }
     public function getProduct($id)
     {
-        $product = Product::where('id', $id)->first();
+        $product = Product::where('id', $id)
+            ->with(['category:category_name,id'])
+            ->with(['images:url,id,product_id'])
+            ->get();
+
         return response()->json([
             'product' => $product,
         ]);

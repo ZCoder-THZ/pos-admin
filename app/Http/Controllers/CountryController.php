@@ -19,9 +19,9 @@ class CountryController extends Controller
             ->addColumn('action', function ($data) {
                 $button = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $data->id . '" data-original-title="Edit" class="edit btn btn-info btn-sm editCountry">Edit</a>';
                 $button .= '&nbsp;&nbsp;';
-                $button .= '<button type="button" name="delete" id="' . $data->id . '" class="delete btn btn-danger btn-sm">Delete</button>';
+                $button .= '<button data-id="' . $data->id . '" id="delete-' . $data->id . '" class="delete btn btn-danger btn-sm">Delete</button>';
                 $button .= '&nbsp;&nbsp;';
-                $button .= '<button type="button" name="delete" id="' . $data->id . '" class="delete btn btn-danger btn-sm">Add City</button>';
+                $button .= '<a  name="delete" id="' . $data->id . '" class=" btn btn-danger btn-sm">Add City</a>';
 
                 return $button;
             })
@@ -44,7 +44,18 @@ class CountryController extends Controller
     {
         try {
             Country::where('id', $id)->delete();
-            return response()->json(['message' => 'Country deleted successfully.'], 200, $headers);
+            return response()->json(['message' => 'Country deleted successfully.'], 200);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()]);
+        }
+    }
+    public function storeCountry(Request $request)
+    {
+        try {
+            $country = new Country();
+            $country->name = $request->country_name;
+            $country->save();
+            return response()->json(['message' => 'Country added successfully.'], 200);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()]);
         }

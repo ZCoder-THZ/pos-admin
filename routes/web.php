@@ -5,6 +5,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CountryController;
+use App\Http\Controllers\CityController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\User\UserController;
 
@@ -55,14 +56,17 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
         //         });
         // });
     });
-    Route::get('countries', [CountryController::class, 'index'])->name('product#countryList');
-    Route::get('country-list', [CountryController::class, 'getCountryList'])->name('product#getCountryList');
-    Route::get('add-country', [CountryController::class, 'addCountry'])->name('product#addCountry');
-    Route::post('add-country', [CountryController::class, 'storeCountry'])->name('product#storeCountry');
-    Route::post('add-country', [CountryController::class, 'storeCountry'])->name('product#storeCountry');
-    Route::put('update-country', [CountryController::class, 'updateCountry'])->name('product#updateCountry');
-
-    // Route::get('country-list', [ProductController::class, 'countryList'])->name('product#countryList');
+    Route::get('countries', [CountryController::class, 'index'])->name('country#countryList');
+    Route::get('country-list', [CountryController::class, 'getCountryList'])->name('country#getCountryList');
+    Route::post('add-country', [CountryController::class, 'storeCountry'])->name('country#storeCountry');
+    Route::put('update-country', [CountryController::class, 'updateCountry'])->name('country#updateCountry');
+    Route::delete('delete-country/{id}', [CountryController::class, 'deleteCountry'])->name('product#deleteCountry');
+    // City
+    Route::get('cities', [CityController::class, 'index'])->name('city#cityList');
+    Route::get('city-list', [CityController::class, 'getCityList'])->name('city#getCityList');
+    Route::post('add-city', [CityController::class, 'storeCity'])->name('city#storeCity');
+    Route::put('update-city', [CityController::class, 'updateCity'])->name('city#updateCity');
+    Route::delete('delete-city/{id}', [CityController::class, 'deleteCity'])->name('city#deleteCity');
 });
 
 Auth::routes();
