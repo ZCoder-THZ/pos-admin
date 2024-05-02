@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  nginx:
+    build:
+      context: .
+      dockerfile: nginx.dockerfile
+    ports:
+      - 80:80
+    volumes:
+      - ./:/var/www/html
+    depends_on:
+      - mysql
+      - php
+  mysql:
+    image: mysql:8.1
+    ports:
+            - 3306:3306
+    volumes:
+            - .docker/db/data:/var/lib/mysql
+            - .docker/logs:/var/log/mysql
+            - .docker/db/my.cnf:/etc/mysql/conf.d/my.cnf
+            - .docker/db/sql:/docker-entrypoint-initdb.d
+    environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: pos
+            MYSQL_USER: password
+            MYSQL_PASSWORD: password
+  php:
+    build:
+      context: .
+      dockerfile: php.dockerfile
+    volumes:
+       - ./:/var/www/html
+
