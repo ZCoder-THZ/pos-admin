@@ -68,7 +68,7 @@
                     <div class="sidebar-brand-text mx-3">SB Admin <sup>2</sup></div>
                 </a>
 
-                <!-- Divider -->Bootstrap
+                <!-- Divider -->
                 <hr class="sidebar-divider my-0">
 
                 <!-- Nav Item - Dashboard -->
@@ -76,6 +76,27 @@
                     <a class="nav-link" href="{{ route('admin#list') }}">
                         <i class="fa-solid fa-users"></i>
                         <span>Users List</span></a>
+                </li>
+                <hr class="sidebar-divider my-0">
+
+                <li class="nav-item ">
+                    <a class="nav-link" href="{{ route('category#createCategoryPage') }}">
+                        <i class="fa-solid fa-users"></i>
+                        <span>Category List</span></a>
+                </li>
+                <hr class="sidebar-divider my-0">
+
+                <li class="nav-item ">
+                    <a class="nav-link" href="{{ route('product#homePage') }}">
+                        <i class="fa-solid fa-users"></i>
+                        <span>Product List</span></a>
+                </li>
+                <hr class="sidebar-divider my-0">
+
+                <li class="nav-item ">
+                    <a class="nav-link" href="{{ route('country#countryList') }}">
+                        <i class="fa-solid fa-users"></i>
+                        <span>Country List</span></a>
                 </li>
 
                 <!-- Divider -->
@@ -86,10 +107,28 @@
                     Interface
                 </div>
 
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{ route('admin#list') }}">
+                    </a>
 
 
-                <!-- Nav Item - Utilities Collapse Menu -->
+                </li>
                 <li class="nav-item">
+                    <a class="collapse-item" href="{{ route('category#categoryList') }}">
+                        <i class="fa-solid fa-users"></i>
+                        <span>Catgory List</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="collapse-item" href="{{ route('category#createCategoryPage') }}">
+                        <i class="fa-solid fa-users"></i>
+                        <span>Category List</span>
+                    </a>
+
+                </li>
+                <!-- Nav Item - Utilities Collapse Menu -->
+                {{-- <li class="nav-item">
                     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
                         aria-expanded="true" aria-controls="collapseUtilities">
                         <i class="fas fa-fw fa-wrench"></i>
@@ -99,7 +138,6 @@
                         data-parent="#accordionSidebar">
                         <div class="bg-white py-2 collapse-inner rounded">
 
-                            <a class="collapse-item" href="{{ route('product#productCreatePage') }}">Create Product</a>
                             <a class="collapse-item" href="{{ route('category#createCategoryPage') }}">Create
                                 Category</a>
                             <a class="collapse-item" href="{{ route('category#categoryList') }}">Category List</a>
@@ -108,7 +146,7 @@
 
                         </div>
                     </div>
-                </li>
+                </li> --}}
 
                 <!-- Divider -->
                 <hr class="sidebar-divider">

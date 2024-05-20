@@ -45,7 +45,7 @@
                     @method('PUT')
                     <div class="modal-body">
                         <input type="text" name="country" class="form-control">
-                        <input type="number" name="id" class="form-control countryId">
+                        <input type="number" name="id" class="form-control countryId" hidden>
                     </div>
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-primary">Save changes</button>

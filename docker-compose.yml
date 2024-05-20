@@ -1,35 +1,56 @@
-version: '3.8'
-
+version: '3'
 services:
+
   nginx:
-    build:
-      context: .
-      dockerfile: nginx.dockerfile
+    image: tonyyb/laravel-nginx:latest
+    restart: unless-stopped
+    tty: true
     ports:
-      - 80:80
+      - "8080:80"
+      - "8043:443"
     volumes:
-      - ./:/var/www/html
+      - ./:/var/www
+    networks:
+      - app-network
     depends_on:
-      - mysql
-      - php
-  mysql:
-    image: mysql:8.1
-    ports:
-            - 3306:3306
+      - php-fpm
+
+  php-fpm:
+    image: tonyyb/laravel-php:latest
+    restart: unless-stopped
+    tty: true
     volumes:
-            - .docker/db/data:/var/lib/mysql
-            - .docker/logs:/var/log/mysql
-            - .docker/db/my.cnf:/etc/mysql/conf.d/my.cnf
-            - .docker/db/sql:/docker-entrypoint-initdb.d
+      - ./:/var/www
+    networks:
+      - app-network
     environment:
-            MYSQL_ROOT_PASSWORD: root
-            MYSQL_DATABASE: pos
-            MYSQL_USER: password
-            MYSQL_PASSWORD: password
-  php:
-    build:
-      context: .
-      dockerfile: php.dockerfile
-    volumes:
-       - ./:/var/www/html
+      APP_ENV: "production"
+      APP_DEBUG: "false"
+      DB_CONNECTION: "mysql"
+      DB_HOST: "192.168.1.182"  # Your host machine's IP address
+      DB_PORT: "3306"
+      DB_DATABASE: "pos"
+      DB_USERNAME: "root"
+      DB_PASSWORD: "thz123456"
+
+networks:
+  app-network:
+    driver: bridge
+
+
+#   mysql:
+#     image: mysql:5.7
+#     restart: unless-stopped
+#     tty: true
+#     ports:
+#       - "8006:3306"
+#     volumes:
+#       - mysqldata:/var/lib/mysql
+#     environment:
+#       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+#       MYSQL_USER: ${MYSQL_USER}
+#       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+#       MYSQL_DATABASE: ${MYSQL_DATABASE}
+#     networks:
+#       - app-network
 

@@ -9,41 +9,42 @@ use Illuminate\Support\Facades\Hash;
 class AuthController extends Controller
 {
     //
-    public function login(Request $request){
-        $user=User::where('email',$request->email)->first();
-        if(isset($user)){
-            if(Hash::check($request->password, $user->password)){
-
+    public function login(Request $request)
+    {
+        $user = User::where('email', $request->email)->first();
+        if (isset($user)) {
+            if (Hash::check($request->password, $user->password)) {
                 return response()->json([
-                       "user"=>$user,
-                       "token"=>$user->createToken(time())->plainTextToken
+                    'user' => $user,
+                    'token' => $user->createToken(time())->plainTextToken,
                 ]);
-            }else{
+            } else {
                 return response()->json([
-                        "message"=>'invalid password'
+                    'message' => 'invalid password',
                 ]);
-                }
-        }else{
+            }
+        } else {
             return response()->json([
-                    "message"=>'there is no user'
+                'message' => 'there is no user',
             ]);
         }
     }
     //
-    public function register(Request $request){
-        $data=[
-            "name"=>$request->name,
-            "email"=>$request->email,
-            "gender"=>$request->gender,
-            "address"=>$request->address,
-            "phone"=>$request->phone,
-            "password"=>Hash::make($request->password)
+    public function register(Request $request)
+    {
+        $data = [
+            'name' => $request->name,
+            'email' => $request->email,
+            'gender' => $request->gender,
+            'address' => $request->address,
+            'phone' => $request->phone,
+            'password' => Hash::make($request->password),
         ];
-       User::create($data);
-        $user=User::latest()->first();
+        User::create($data);
+        $user = User::latest()->first();
         return response()->json([
-                 'token'=>$user->createToken(time())->plainTextToken,
-                'user'=>$user
+            'token' => $user->createToken(time())->plainTextToken,
+            'user' => $user,
         ]);
     }
 }

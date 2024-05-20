@@ -15,7 +15,7 @@
         <form method="POST" action="{{ route('login') }}">
             <h1 class="text-center">POS Admin</h1>
 
-            <h3 class="text-left mb-3">Login</h3>
+            <h3 class="text-left mb-3">Log in</h3>
 
             @csrf
 

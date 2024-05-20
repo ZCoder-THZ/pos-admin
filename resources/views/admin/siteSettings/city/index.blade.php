@@ -15,14 +15,14 @@
         <div class="container py-5 h-100">
             <button type="button" class="btn btn-primary mb-4 addCity" data-toggle="modal"
                 data-target="#exampleModalCenter">
-                Add Country
+                Add City
             </button>
             <table id="cityTable" class="table table-secondary table-striped table-bordered" style="width:100%">
                 <thead>
                     <tr>
                         <th>Id</th>
                         <th>Name</th>
-
+                        <th>Country Name</th>
                 </thead>
                 <tbody>
 
@@ -102,6 +102,10 @@
                     {
                         data: 'name',
                         name: 'name'
+                    },
+                    {
+                        data: 'country_name',
+                        name: 'country_name'
                     }
                 ]
 

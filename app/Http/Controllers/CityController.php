@@ -18,7 +18,9 @@ class CityController extends Controller
     }
     public function getCityList()
     {
-        $cities = City::select(['id', 'name']);
+        $cities = City::select(['cities.id', 'cities.name', 'countries.name as country_name'])
+            ->leftJoin('countries', 'cities.country_id', '=', 'countries.id')
+            ->get();
 
         return DataTables::of($cities)->make(true);
     }
